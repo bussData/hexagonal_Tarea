@@ -1,4 +1,4 @@
-package com.bancodigital.crud.infraestructure.adapters.output;
+package com.bancodigital.crud.infraestructure.adapters.output.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "cliente")

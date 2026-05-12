@@ -2,6 +2,7 @@ package com.bancodigital.crud.infraestructure.adapters.output;
 
 import com.bancodigital.crud.application.ports.output.ClienteRepositoryPort;
 import com.bancodigital.crud.domain.model.Cliente;
+import com.bancodigital.crud.infraestructure.adapters.output.entities.ClienteEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

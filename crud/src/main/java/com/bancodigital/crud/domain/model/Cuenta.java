@@ -10,8 +10,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Cuenta {
-    private Long cuentaId;
-    private Long clienteId;
+    private String cuentaId;
+    private String clienteId;
     private String numCuenta;
     private double saldo;
     private String estado;

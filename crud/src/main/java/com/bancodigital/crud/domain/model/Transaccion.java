@@ -10,9 +10,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Transaccion {
-    private Long trxId;
-    private Long cuentaOrigenId;
-    private Long cuentaDestinoId;
+    private String trxId;
+    private String cuentaOrigenId;
+    private String cuentaDestinoId;
     private double montoTrx;
     private double comision;
     private String tipoTrx;

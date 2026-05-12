@@ -1,9 +1,9 @@
 package com.bancodigital.crud.infraestructure.adapters.output;
 
+import com.bancodigital.crud.infraestructure.adapters.output.entities.ClienteEntity;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 import com.bancodigital.crud.domain.model.Cliente;
 
 import java.util.List;

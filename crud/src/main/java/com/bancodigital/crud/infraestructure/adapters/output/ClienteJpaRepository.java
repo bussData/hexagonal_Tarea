@@ -1,12 +1,11 @@
 package com.bancodigital.crud.infraestructure.adapters.output;
 
-import com.bancodigital.crud.domain.model.Cliente;
+import com.bancodigital.crud.infraestructure.adapters.output.entities.ClienteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 interface ClienteJpaRepository  extends JpaRepository<ClienteEntity, String> {
 
