@@ -10,11 +10,10 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Cliente {
-    private Long clienteId;
+    private String clienteId;
     private String nombre;
     private String email;
-    private String tipoDocumento;
-    private String numDocumento;
+    private String documento;
     private Date fechaCreacion;
 
 
@@ -33,10 +32,9 @@ public class Cliente {
 
 
     public boolean hasValidDocumento() {
-        return tipoDocumento != null &&
-                !tipoDocumento.trim().isEmpty() &&
-                !numDocumento.trim().isEmpty() &&
-                 numDocumento.length() >= 8;
+        return documento != null &&
+                !documento.trim().isEmpty() &&
+                documento.length() >= 8;
     }
 
 
