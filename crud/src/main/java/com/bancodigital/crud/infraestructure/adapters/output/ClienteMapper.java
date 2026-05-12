@@ -28,6 +28,7 @@ public interface ClienteMapper {
     ClienteResponse toResponse(Cliente createCliente);
 
 
+    @Mapping(target = "clienteId", source = "clienteId")
     List<ClienteResponse> toResponse(List<Cliente> createCliente);
 
 
@@ -41,6 +42,9 @@ public interface ClienteMapper {
 
 
     // Entity -> Domain
-
+    @Mapping(target = "clienteId", source = "id")
+    @Mapping(target = "documento", source = "documento")
     Cliente toDomain(ClienteEntity entity);
+
+    List<Cliente> toDomain(List<ClienteEntity> entities);
 }

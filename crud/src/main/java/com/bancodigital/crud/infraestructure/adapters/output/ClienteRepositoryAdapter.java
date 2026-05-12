@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //IMPLEMENTACION DE ADAPTER QUE SE LEE EN EL CRUD CONFIG
 @Repository
@@ -17,7 +14,6 @@ import java.util.Map;
 @Slf4j
 public class ClienteRepositoryAdapter implements ClienteRepositoryPort {
 
-    private final Map<Long, Cliente> data = new HashMap<>();
     private final ClienteJpaRepository jpaRepository;
     private final ClienteMapper mapper;
     @Override
@@ -36,24 +32,39 @@ public class ClienteRepositoryAdapter implements ClienteRepositoryPort {
 
     @Override
     public List<Cliente> findAll() {
-        return new ArrayList<>(data.values());
+        List<ClienteEntity> entities = this.jpaRepository.findAll();
+        return this.mapper.toDomain(entities);
     }
 
     @Override
-    public Cliente findClienteById(String clienteId) {
-        return data.get(clienteId);
+    public Cliente findById(String clienteId) {
+
+        return this.jpaRepository
+                .findById(clienteId)
+                .map(this.mapper::toDomain)
+                .orElseThrow(() ->
+                        new RuntimeException("Cliente no encontrado"));
     }
 
     @Override
     public List<Cliente> findByNameContaining(String name) {
-        return data.values()
-                .stream()
-                .filter(c -> c.getNombre().contains(name))
-                .toList();
+
+        List<ClienteEntity> entities = this.jpaRepository.findByNameContainingIgnoreCase(name);
+        return this.mapper.toDomain(entities);
     }
 
     @Override
     public void deleteCliente(String clienteId) {
-        data.remove(clienteId);
+        this.jpaRepository.deleteById(clienteId);
+    }
+
+    @Override
+    public boolean existeByEmail(String email) {
+        return this.jpaRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean existeByDocumento(String documento) {
+        return this.jpaRepository.existsByDocumento(documento);
     }
 }

@@ -1,9 +1,9 @@
 package com.bancodigital.crud.application.ports.output;
 
 import com.bancodigital.crud.domain.model.Cliente;
-import org.springframework.context.annotation.Bean;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ClienteRepositoryPort {
 
@@ -14,7 +14,9 @@ public interface ClienteRepositoryPort {
 
     Cliente save(Cliente cliente);
     List<Cliente> findAll();
-    Cliente findClienteById(String clienteId);
+    Cliente findById(String clienteId);
     List<Cliente> findByNameContaining(String name);
+    boolean existeByEmail(String email);
+    boolean existeByDocumento(String documento);
     void deleteCliente(String clienteId);
 }

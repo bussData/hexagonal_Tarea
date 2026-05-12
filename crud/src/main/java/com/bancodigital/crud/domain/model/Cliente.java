@@ -37,5 +37,10 @@ public class Cliente {
                 documento.length() >= 8;
     }
 
+    public void updateCliente(String nombre, String email, String documento){
+        this.nombre = nombre;
+        this.email = email;
+        this.documento = documento;
+    }
 
 }

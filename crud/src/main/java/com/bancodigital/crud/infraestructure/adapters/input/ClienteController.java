@@ -43,7 +43,7 @@ public class ClienteController {
         try {
             log.info("Buscando cliente con ID: {}", id);
 
-            Cliente cliente = this.clienteService.findClienteById(id);
+            Cliente cliente = this.clienteService.findCliente(id);
             log.info("cliente encontrado: {}", cliente.getClienteId());
 
             return ResponseEntity.ok(this.clienteMapper.toResponse(cliente));
@@ -72,14 +72,14 @@ public class ClienteController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ClienteResponse>> searchClientesByName(@RequestParam String name) {
+    public ResponseEntity<List<ClienteResponse>> searchClientesByNombre(@RequestParam String nombre) {
         try {
-            log.info("Buscando clientes por nombre {}", name);
+            log.info("Buscando clientes por nombre {}", nombre);
 
-            List<Cliente> clientes = this.clienteService.findClienteByName(name);
+            List<Cliente> clientes = this.clienteService.findClienteByName(nombre);
             List<ClienteResponse> responses = this.clienteMapper.toResponse(clientes);
 
-            log.info("Encontro {} clientes con el nombre '{}'", responses.size(), name);
+            log.info("Encontro {} clientes con el nombre '{}'", responses.size(), nombre);
             return ResponseEntity.ok(responses);
 
          } catch (Exception e) {
@@ -102,6 +102,29 @@ public class ClienteController {
 
         } catch (Exception e) {
             log.error("Error inesperado al borrar cliente", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponse> updateCliente(@PathVariable String id, @RequestBody ClienteRequest request) {
+        try {
+            log.info("Actualizando cliente with ID: {} with data: nombre={}, email={}", id, request.getNombre(), request.getEmail());
+
+            Cliente cliente = clienteMapper.toDomain(request);
+            Cliente clienteActualizado = clienteService.updateCliente(id, cliente);
+
+            if (clienteActualizado == null) {
+                log.warn("service del cliente devuelve null para el update");
+                return ResponseEntity.badRequest().build();
+            }
+
+            log.info("Cliente actualizado exitosamente con ID: {}", clienteActualizado.getClienteId());
+            return ResponseEntity.ok(clienteMapper.toResponse(clienteActualizado));
+
+        } catch (Exception e) {
+            log.error("Error inesperado al actualizar cliente", e);
             return ResponseEntity.internalServerError().build();
         }
     }

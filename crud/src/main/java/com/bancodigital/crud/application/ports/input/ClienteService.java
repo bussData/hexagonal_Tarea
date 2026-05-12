@@ -8,7 +8,9 @@ public interface ClienteService {
 
     Cliente createCliente(Cliente newCliente);
     List<Cliente> findAllClientes();
-    Cliente findClienteById(String clienteId);
+   //  Cliente findById(String clienteId);
+   Cliente findCliente(String clienteId);
+
     List<Cliente> findClienteByName(String nombre);
 
     Cliente updateCliente(String id, Cliente cliente);

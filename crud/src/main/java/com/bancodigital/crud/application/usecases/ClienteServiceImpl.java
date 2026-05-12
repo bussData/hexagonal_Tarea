@@ -31,16 +31,17 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @Transactional(readOnly = true)
     public List<Cliente> findAllClientes() {
+
         return clienteRepositoryPort.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Cliente findClienteById(String clienteId) {
+    public Cliente findCliente(String clienteId) {
         if (clienteId == null || clienteId.trim().isEmpty()) {
             throw new RuntimeException("Id de cliente invalido");
         }
-        return clienteRepositoryPort.findClienteById(clienteId);
+        return clienteRepositoryPort.findById(clienteId);
     }
 
 
@@ -61,17 +62,31 @@ public class ClienteServiceImpl implements ClienteService {
             throw new RuntimeException("Id invalido");
         }
 
-        Cliente clienteExistente =  clienteRepositoryPort.findClienteById(id);
+        Cliente clienteExistente =  clienteRepositoryPort.findById(id);
 
         if(clienteExistente == null){
             throw new RuntimeException("Cliente no encontrado");
         }
 
         //validaciones de cliente
-        //seteo de valores nuevos
+        validacionesDatos(cliente);
 
+        //coteja si existe cambio de email o si el email ya existe
+        if(!clienteExistente.getEmail().equals(cliente.getEmail()) &&
+                clienteRepositoryPort.existeByEmail(cliente.getEmail())){
+            throw  new RuntimeException("Email ya existia"+cliente.getEmail());
+        }
+
+        if(!clienteExistente.getDocumento().equals(cliente.getDocumento()) &&
+            clienteRepositoryPort.existeByDocumento(cliente.getDocumento())){
+            throw  new RuntimeException("Documento ya existia"+cliente.getDocumento());
+        }
+
+        //actualizamos el cliente
+        clienteExistente.updateCliente(cliente.getNombre(), cliente.getEmail(), cliente.getDocumento());
         return clienteRepositoryPort.save(clienteExistente);
     }
+
 
     @Override
     public void deleteCliente(String clienteId) {
@@ -79,10 +94,21 @@ public class ClienteServiceImpl implements ClienteService {
             throw new RuntimeException("Id de cliente invalido");
         }
 
-        if(clienteRepositoryPort.findClienteById(clienteId)==null){
+        if(clienteRepositoryPort.findById(clienteId)==null){
             throw new RuntimeException("Cliente no existe");
         }
 
         clienteRepositoryPort.deleteCliente(clienteId);
+    }
+
+
+    private void validacionesDatos(Cliente cliente) {
+
+        if(!cliente.hasValidNombre()){
+            throw new RuntimeException("Nombre debe tener al menos 2 caracteres");
+        }
+        if(!cliente.hasValidEmail()){
+            throw new RuntimeException("email de formato invalido");
+        }
     }
 }
