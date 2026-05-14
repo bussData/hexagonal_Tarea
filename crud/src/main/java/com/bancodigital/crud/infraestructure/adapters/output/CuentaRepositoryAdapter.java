@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 //IMPLEMENTACION DE ADAPTER QUE SE LEE EN EL CRUD CONFIG
 @Repository

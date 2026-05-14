@@ -2,7 +2,6 @@ package com.bancodigital.crud.infraestructure.adapters.input;
 
 
 import com.bancodigital.crud.application.ports.input.CuentaService;
-import com.bancodigital.crud.domain.model.Cliente;
 import com.bancodigital.crud.domain.model.Cuenta;
 import com.bancodigital.crud.infraestructure.adapters.output.CuentaRequest;
 import com.bancodigital.crud.infraestructure.adapters.output.CuentaMapper;

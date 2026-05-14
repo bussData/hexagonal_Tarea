@@ -33,6 +33,9 @@ public class ClienteServiceImpl implements ClienteService {
 
     private void validacionesRegistroCliente(Cliente newCliente) {
 
+        if(newCliente.getClienteId() == null){
+            throw new RuntimeException("ClienteID no puede ser nulo");
+        }
         if(!newCliente.hasValidEmail()){
             throw new RuntimeException("Cliente no tiene correo valido");
         }

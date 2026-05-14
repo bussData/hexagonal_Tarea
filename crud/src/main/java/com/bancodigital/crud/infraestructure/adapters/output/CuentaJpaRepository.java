@@ -1,6 +1,5 @@
 package com.bancodigital.crud.infraestructure.adapters.output;
 
-import com.bancodigital.crud.domain.model.Cuenta;
 import com.bancodigital.crud.infraestructure.adapters.output.entities.CuentaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
