@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -104,6 +105,27 @@ public class CuentaServiceImpl implements CuentaService {
     @Override
     public List<Cuenta> findCuentaByNroCuenta(String nroCuenta) {
         return cuentaRepositoryPort.findByNroCuenta(nroCuenta);
+    }
+
+    @Override
+    public List<Cuenta> findCuentaByNombreCliente(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new RuntimeException("El nombre del cliente no puede ser vacío");
+        }
+        // 1. Buscar todos los clientes que coincidan con el nombre
+        List<Cliente> clientes = clienteRepositoryPort.findByNameContaining(nombre.trim());
+
+        if (clientes == null || clientes.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // 2. Por cada cliente, buscar sus cuentas y acumularlas
+        List<Cuenta> cuentas = new ArrayList<>();
+        for (Cliente cliente : clientes) {
+            List<Cuenta> cuentasCliente = cuentaRepositoryPort.findByClienteId(cliente.getClienteId());
+            cuentas.addAll(cuentasCliente);
+        }
+        return cuentas;
     }
 
     @Override

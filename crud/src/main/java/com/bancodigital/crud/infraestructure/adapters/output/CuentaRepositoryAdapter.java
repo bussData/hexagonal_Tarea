@@ -48,6 +48,12 @@ public class CuentaRepositoryAdapter implements CuentaRepositoryPort {
     }
 
     @Override
+    public List<Cuenta> findByClienteId(String clienteId) {
+        List<CuentaEntity> entities = this.jpaRepository.findByClienteId(clienteId);
+        return this.mapper.toDomain(entities);
+    }
+
+    @Override
     public Cuenta findById(String cuentaId) {
 
         CuentaEntity entity = this.jpaRepository.findById(cuentaId)
