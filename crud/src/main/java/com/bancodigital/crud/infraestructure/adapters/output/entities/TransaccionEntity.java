@@ -20,12 +20,12 @@ public class TransaccionEntity {
     private String transaccionId;
 
     @ManyToOne(fetch = FetchType.LAZY) //con esto mapeo el FK
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private ClienteEntity cliente;
+    @JoinColumn(name = "cuenta_origen_id", nullable = false)
+    private CuentaEntity cuentaOrigenId;
 
     @ManyToOne(fetch = FetchType.LAZY) //con esto mapeo el FK
-    @JoinColumn(name = "cuenta_id", nullable = false)
-    private CuentaEntity cuenta;
+    @JoinColumn(name = "cuenta_destino_id", nullable = false)
+    private CuentaEntity cuentaDestinoId;
 
     @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal monto;

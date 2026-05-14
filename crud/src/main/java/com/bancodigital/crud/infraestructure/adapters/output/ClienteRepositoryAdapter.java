@@ -22,7 +22,7 @@ public class ClienteRepositoryAdapter implements ClienteRepositoryPort {
 
         log.info("INICIO SAVE");
         ClienteEntity entity = this.mapper.toEntity(cliente);
-        log.info("ENTITY: {}", entity);
+        log.info("ENTITY: {}", entity!=null?entity:null);
 
         ClienteEntity entidadAGrabar = this.jpaRepository.save(entity);
         log.info("GUARDADO: {}", entidadAGrabar);
@@ -40,11 +40,19 @@ public class ClienteRepositoryAdapter implements ClienteRepositoryPort {
     @Override
     public Cliente findById(String clienteId) {
 
-        return this.jpaRepository
+        /*return this.jpaRepository
                 .findById(clienteId)
                 .map(this.mapper::toDomain)
-                .orElseThrow(() ->
-                        new RuntimeException("Cliente no encontrado"));
+                .orElse(null);//en caso de no encontrar devuelve null*/
+        Optional<Cliente> cliente = this.jpaRepository
+                .findById(clienteId)
+                .map(this.mapper::toDomain);
+
+        if (cliente.isEmpty()) {
+            log.info("Cliente no encontrado con id: {}", clienteId);
+        }
+
+        return cliente.orElse(null);
     }
 
     @Override

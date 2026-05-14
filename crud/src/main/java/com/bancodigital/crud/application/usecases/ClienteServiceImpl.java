@@ -23,9 +23,26 @@ public class ClienteServiceImpl implements ClienteService {
             throw new RuntimeException("Cliente no puede ser nulo");
         }
 
-        //ejecutar validaciones del cliente.
+        //ejecutar validaciones del cliente:
+        //Email formato valido
+        //Documento unico en el sistema
+        validacionesRegistroCliente(newCliente);
 
         return clienteRepositoryPort.save(newCliente);
+    }
+
+    private void validacionesRegistroCliente(Cliente newCliente) {
+
+        if(!newCliente.hasValidEmail()){
+            throw new RuntimeException("Cliente no tiene correo valido");
+        }
+        if(!newCliente.hasValidDocumento()){
+            throw  new RuntimeException("Cliente no tiene documento valido");
+        }else{
+            if(clienteRepositoryPort.existeByDocumento(newCliente.getDocumento())){
+                throw new RuntimeException("Documento ya existe en bd");
+            }
+        }
     }
 
     @Override
@@ -69,18 +86,7 @@ public class ClienteServiceImpl implements ClienteService {
         }
 
         //validaciones de cliente
-        validacionesDatos(cliente);
-
-        //coteja si existe cambio de email o si el email ya existe
-        if(!clienteExistente.getEmail().equals(cliente.getEmail()) &&
-                clienteRepositoryPort.existeByEmail(cliente.getEmail())){
-            throw  new RuntimeException("Email ya existia"+cliente.getEmail());
-        }
-
-        if(!clienteExistente.getDocumento().equals(cliente.getDocumento()) &&
-            clienteRepositoryPort.existeByDocumento(cliente.getDocumento())){
-            throw  new RuntimeException("Documento ya existia"+cliente.getDocumento());
-        }
+        validacionesModificacionCliente(cliente,clienteExistente);
 
         //actualizamos el cliente
         clienteExistente.updateCliente(cliente.getNombre(), cliente.getEmail(), cliente.getDocumento());
@@ -102,7 +108,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
 
-    private void validacionesDatos(Cliente cliente) {
+    private void validacionesModificacionCliente(Cliente cliente, Cliente clienteExistente) {
 
         if(!cliente.hasValidNombre()){
             throw new RuntimeException("Nombre debe tener al menos 2 caracteres");
@@ -110,5 +116,17 @@ public class ClienteServiceImpl implements ClienteService {
         if(!cliente.hasValidEmail()){
             throw new RuntimeException("email de formato invalido");
         }
+
+        //coteja si existe cambio de email o si el email ya existe
+        if(!clienteExistente.getEmail().equals(cliente.getEmail()) &&
+                clienteRepositoryPort.existeByEmail(cliente.getEmail())){
+            throw  new RuntimeException("Email ya existia"+cliente.getEmail());
+        }
+
+        if(!clienteExistente.getDocumento().equals(cliente.getDocumento()) &&
+                clienteRepositoryPort.existeByDocumento(cliente.getDocumento())){
+            throw  new RuntimeException("Documento ya existia"+cliente.getDocumento());
+        }
+
     }
 }

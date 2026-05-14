@@ -8,7 +8,8 @@ public interface CuentaService {
 
     Cuenta createCuenta(Cuenta newCuenta);
     List<Cuenta> findAllCuentas();
-    List<Cuenta> findCuentaById(String cuentaId);
+    Cuenta findCuentaById(String cuentaId);
+    List<Cuenta> findCuentaByNroCuenta(String nroCuenta);
 
     Cuenta updateCuenta(String cuentaId, Cuenta cuenta);
     void deleteCuenta(String cuentaId);

@@ -12,8 +12,14 @@ public interface CuentaRepositoryPort {
      */
 
     Cuenta save(Cuenta cuenta);
-    List<Cuenta> findById(String nroCta);
+    Cuenta findById(String cuentaId);
+    List<Cuenta> findByNroCuenta(String nroCta);
     List<Cuenta> findAll();
 
+    boolean tieneSaldo(Cuenta cuenta);
+    boolean esCuentaUnica(Cuenta cuenta);
+    boolean esCuentaActiva(Cuenta cuenta);
+
+    void deleteCuenta(String nroCta);
 
 }
