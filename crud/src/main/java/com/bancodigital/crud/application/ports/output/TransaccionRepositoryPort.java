@@ -15,5 +15,6 @@ public interface TransaccionRepositoryPort {
 
     Transaccion save(Transaccion trx);
     List<Transaccion> findAll();
-    List<Transaccion> findById(String numTrx);
+    Transaccion findById(String numTrx);
+    Transaccion updateTrx(Transaccion trx, String estado);
 }

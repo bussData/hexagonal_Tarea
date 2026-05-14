@@ -1,27 +1,26 @@
-package com.bancodigital.crud.domain.model;
+package com.bancodigital.crud.infraestructure.adapters.output;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Getter
-@AllArgsConstructor
+@Data
 @Builder
-public class Transaccion {
+@NoArgsConstructor
+@AllArgsConstructor
+public class TransaccionResponse {
+
     private String trxId;
-    private Cuenta cuentaOrigen;
-    private Cuenta cuentaDestino;
+    private String cuentaOrigenId;
+    private String cuentaDestinoId;
     private BigDecimal montoTrx;
     private BigDecimal comision;
     private String tipoTrx;
     private String estadoTrx;
     private String descripcionTrx;
     private Date fechaTrx;
-
-    public void updateEstado(String estado){
-        this.estadoTrx = estado;
-    }
 }

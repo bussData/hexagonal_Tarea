@@ -38,6 +38,6 @@ public class CuentaEntity {
     private LocalDateTime fechaCreacion  = LocalDateTime.now();
 
     @UpdateTimestamp
-    @Column(name = "fecha_actualizacion", nullable = false, updatable = false)
+    @Column(name = "fecha_actualizacion", nullable = false, updatable = true)
     private LocalDateTime fechaActualizacion  = LocalDateTime.now();
 }

@@ -99,7 +99,7 @@ public class CuentaServiceImpl implements CuentaService {
         return cuentaRepositoryPort.findAll();
     }
 
-    @Override
+    /*@Override
     public Cuenta findCuentaById(String cuentaId) {
         return cuentaRepositoryPort.findById(cuentaId);
     }
@@ -107,7 +107,7 @@ public class CuentaServiceImpl implements CuentaService {
     @Override
     public List<Cuenta> findCuentaByNroCuenta(String nroCuenta) {
         return cuentaRepositoryPort.findByNroCuenta(nroCuenta);
-    }
+    }*/
 
     @Override
     public List<Cuenta> findCuentaByNombreCliente(String nombre) {
@@ -123,10 +123,6 @@ public class CuentaServiceImpl implements CuentaService {
         return lstCuentas;
     }
 
-    @Override
-    public Cuenta updateCuenta(String cuentaId, Cuenta cuenta) {
-        return null;
-    }
 
     @Override
     public void deleteCuenta(String cuentaId) {
@@ -140,4 +136,5 @@ public class CuentaServiceImpl implements CuentaService {
 
         cuentaRepositoryPort.deleteCuenta(cuentaId);
     }
+
 }

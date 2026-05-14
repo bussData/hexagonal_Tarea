@@ -46,11 +46,11 @@ public class CuentaController {
             List<Cuenta> cuentas = this.cuentaService.findAllCuentas();
             List<CuentaResponse> responses = this.cuentaMapper.toResponse(cuentas);
 
-            log.info("Encontro {} clientes", responses.size());
+            log.info("Encontro {} cuentas", responses.size());
             return ResponseEntity.ok(responses);
 
         }catch (Exception e) {
-            log.error("Error inesperado al buscar clientes", e);
+            log.error("Error inesperado al buscar cuentas", e);
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -89,5 +89,6 @@ public class CuentaController {
             return ResponseEntity.internalServerError().build();
         }
     }
-    //no se hizo update
+
+    //update se maneja con transferencias.
 }

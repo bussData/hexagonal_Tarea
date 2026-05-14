@@ -32,7 +32,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"clienteId\":\"CLI1\",\r\n    \"nombre\":\"Maria Julia\",\r\n    \"email\":\"mjulia@gmail.com\", \r\n    \"documento\":\"44508804\"     \r\n}",
+          "raw": "{\r\n    \"clienteId\":\"CLI1\",\r\n    \"nombre\":\"Maria s\",\r\n    \"email\":\"mjulia@gmail.com\", \r\n    \"documento\":\"445085544\"     \r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -60,7 +60,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"cuentaId\":\"CUENTASOLES1\",\r\n    \"cliente\":{\r\n        \"clienteId\":\"CLI1\",\r\n        \"nombre\":\"Maria Julia\",\r\n        \"email\":\"mjulia@gmail.com\", \r\n        \"documento\":\"44508804\"     \r\n    },\r\n    \"numCuenta\": \"0012026130500\",\r\n    \"saldo\":100,\r\n    \"estado\": \"ACTIVA\"\r\n}",
+          "raw": "{\r\n    \"cuentaId\":\"CUENTADOL\",\r\n    \"cliente\":{\r\n        \"clienteId\":\"CLI2\",\r\n        \"nombre\":\"LIOS PAREDES\",\r\n        \"email\":\"PAREDESA@gmail.com\", \r\n        \"documento\":\"4343308804\"     \r\n    },\r\n    \"numCuenta\": \"0012233553776533\",\r\n    \"saldo\":100,\r\n    \"estado\": \"ACTIVA\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -170,6 +170,79 @@
           "path": [
             "api",
             "cuentas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/api/cuentas/search Busqueda cuentas por nombre cliente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/cuentas/search?nombre=PARE",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "cuentas",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "nombre",
+              "value": "PARE"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST localhost:8080/api/transacciones",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"trxId\": \"TXN004\",\r\n    \"cuentaOrigenId\": \"CTA001\",\r\n    \"cuentaDestinoId\": \"CTA002\",    \r\n    \"comision\" : 0.5,\r\n    \"montoTrx\": 100.00,\r\n    \"tipoTrx\" : \"TRANSFERENCIA\",\r\n    \"estadoTrx\" : \"COMPLETADA\",\r\n    \"descripcionTrx\" : \"Transferencia de prueba\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/transacciones",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "transacciones"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/api/transacciones",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/transacciones",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "transacciones"
           ]
         }
       },

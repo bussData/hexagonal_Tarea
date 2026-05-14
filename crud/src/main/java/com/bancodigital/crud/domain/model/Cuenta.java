@@ -26,4 +26,8 @@ public class Cuenta {
         this.numCuenta = numCuenta;
         this.estado = estado;
     }
+
+    public void updateCuenta(BigDecimal saldo){
+        this.saldo = saldo;
+    }
 }
