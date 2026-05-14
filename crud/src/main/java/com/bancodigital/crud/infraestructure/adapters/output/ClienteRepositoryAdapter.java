@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.UUID;
 
 //IMPLEMENTACION DE ADAPTER QUE SE LEE EN EL CRUD CONFIG
 @Repository
@@ -23,6 +24,12 @@ public class ClienteRepositoryAdapter implements ClienteRepositoryPort {
 
         log.info("INICIO SAVE");
         ClienteEntity entity = this.mapper.toEntity(cliente);
+
+        // Generar UUID si el cliente no trae ID (nuevo registro)
+        if (entity.getId() == null || entity.getId().trim().isEmpty()) {
+            entity.setId(UUID.randomUUID().toString());
+        }
+
         log.info("ENTITY: {}", entity!=null?entity:null);
 
         ClienteEntity entidadAGrabar = this.jpaRepository.save(entity);

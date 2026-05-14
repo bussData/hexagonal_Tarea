@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -25,5 +26,20 @@ public class Cuenta {
         this.cuentaId = cuentaId;
         this.numCuenta = numCuenta;
         this.estado = estado;
+    }
+
+    // --- Validaciones de dominio ---
+
+    public boolean hasValidSaldo() {
+        return saldo != null && saldo.compareTo(BigDecimal.ZERO) >= 0;
+    }
+
+    public boolean hasValidEstado() {
+        return estado != null &&
+                List.of("ACTIVO", "CERRADO").contains(estado.toUpperCase());
+    }
+
+    public boolean hasValidNumCuenta() {
+        return numCuenta != null && !numCuenta.trim().isEmpty();
     }
 }

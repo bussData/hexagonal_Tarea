@@ -5,14 +5,10 @@ import com.bancodigital.crud.application.ports.output.ClienteRepositoryPort;
 import com.bancodigital.crud.application.ports.output.CuentaRepositoryPort;
 import com.bancodigital.crud.domain.model.Cliente;
 import com.bancodigital.crud.domain.model.Cuenta;
-import com.bancodigital.crud.infraestructure.adapters.output.entities.ClienteEntity;
-import com.bancodigital.crud.infraestructure.adapters.output.entities.CuentaEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -77,19 +73,20 @@ public class CuentaServiceImpl implements CuentaService {
     //numero_cuenta único
     //estado valores permitidos: 'ACTIVO', 'CERRADO'
     private void validacionesRegistroCuenta(Cuenta newCuenta) {
-        if(new BigDecimal(0).compareTo(newCuenta.getSaldo())==0
-                || newCuenta.getSaldo().compareTo(new BigDecimal(0))<0){
-            throw new RuntimeException("El monto del saldo no puede ser menor o igual a cero");
+        if(!newCuenta.hasValidSaldo()){
+            throw new RuntimeException("El saldo no puede ser negativo ni nulo");
+        }
+
+        if(!newCuenta.hasValidNumCuenta()){
+            throw new RuntimeException("El número de cuenta es inválido");
         }
 
         if(!cuentaRepositoryPort.esCuentaUnica(newCuenta)){
-            throw new RuntimeException("Id de cuenta ya existia");
+            throw new RuntimeException("Nro de cuenta ya existia");
         }
 
-        if(newCuenta.getEstado().equals("ACTIVA") || newCuenta.getEstado().equals("CERRADO")){
-           //esta ok
-        }else{
-            throw new RuntimeException("El valor de estado "+newCuenta.getEstado()+" no esta permitido");
+        if(!newCuenta.hasValidEstado()){
+            throw new RuntimeException("El valor de estado '" + newCuenta.getEstado() + "' no está permitido. Use 'ACTIVO' o 'CERRADO'");
         }
 
     }
@@ -107,20 +104,6 @@ public class CuentaServiceImpl implements CuentaService {
     @Override
     public List<Cuenta> findCuentaByNroCuenta(String nroCuenta) {
         return cuentaRepositoryPort.findByNroCuenta(nroCuenta);
-    }
-
-    @Override
-    public List<Cuenta> findCuentaByNombreCliente(String nombre) {
-        List<Cliente> lstClientes = clienteRepositoryPort.findByNameContaining(nombre.trim());
-        List<Cuenta> lstCuentas = new ArrayList<Cuenta>();
-        if(lstClientes == null){
-            return  null;
-        }else{
-            for(Cliente clienteEncontrado : lstClientes){
-                lstCuentas.addAll(cuentaRepositoryPort.findByClienteId(clienteEncontrado.getClienteId()));
-            }
-        }
-        return lstCuentas;
     }
 
     @Override
