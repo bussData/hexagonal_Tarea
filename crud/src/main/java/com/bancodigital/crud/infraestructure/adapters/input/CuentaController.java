@@ -2,6 +2,7 @@ package com.bancodigital.crud.infraestructure.adapters.input;
 
 
 import com.bancodigital.crud.application.ports.input.CuentaService;
+import com.bancodigital.crud.domain.model.Cliente;
 import com.bancodigital.crud.domain.model.Cuenta;
 import com.bancodigital.crud.infraestructure.adapters.output.CuentaRequest;
 import com.bancodigital.crud.infraestructure.adapters.output.CuentaMapper;
@@ -71,5 +72,23 @@ public class CuentaController {
         }
     }
 
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CuentaResponse>> searchCuentasByCliente(@RequestParam String nombre){
+        try{
+            log.info("Buscando cuentas por cliente {}", nombre);
+            if(nombre ==null || nombre.trim().isEmpty()){
+                throw new RuntimeException("Nombre a buscar no puede ser invalido");
+            }
+            List<Cuenta> cuentas = this.cuentaService.findCuentaByNombreCliente(nombre);
+            log.info("Encontro "+cuentas.size()+" cuentas asociadas a "+nombre);
+            List<CuentaResponse> responses = this.cuentaMapper.toResponse(cuentas);
+            return ResponseEntity.ok(responses);
+
+        }catch (Exception e) {
+            log.error("Error inesperado al buscar cuentas por cliente", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
     //no se hizo update
 }

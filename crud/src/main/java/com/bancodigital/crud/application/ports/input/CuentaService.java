@@ -10,6 +10,7 @@ public interface CuentaService {
     List<Cuenta> findAllCuentas();
     Cuenta findCuentaById(String cuentaId);
     List<Cuenta> findCuentaByNroCuenta(String nroCuenta);
+    List<Cuenta> findCuentaByNombreCliente(String nombre);
 
     Cuenta updateCuenta(String cuentaId, Cuenta cuenta);
     void deleteCuenta(String cuentaId);

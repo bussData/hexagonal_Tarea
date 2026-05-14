@@ -41,6 +41,12 @@ public class CuentaRepositoryAdapter implements CuentaRepositoryPort {
     }
 
     @Override
+    public List<Cuenta> findByClienteId(String clienteId) {
+        List<CuentaEntity> entities = this.jpaRepository.findByClienteId(clienteId);
+        return this.mapper.toDomain(entities);
+    }
+
+    @Override
     public Cuenta findById(String cuentaId) {
 
         CuentaEntity entity = this.jpaRepository.findById(cuentaId)
@@ -67,7 +73,7 @@ public class CuentaRepositoryAdapter implements CuentaRepositoryPort {
     @Override
     public boolean esCuentaUnica(Cuenta cuenta) {
         //Cotejar si es bd es la unica cta
-        if(this.jpaRepository.esCuentaUnica(cuenta.getCliente().getClienteId())){
+        if(this.jpaRepository.esCuentaUnica(cuenta.getCuentaId())){
             return true;
         }
         return false;

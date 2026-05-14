@@ -14,6 +14,7 @@ public interface CuentaRepositoryPort {
     Cuenta save(Cuenta cuenta);
     Cuenta findById(String cuentaId);
     List<Cuenta> findByNroCuenta(String nroCta);
+    List<Cuenta> findByClienteId(String clienteId);
     List<Cuenta> findAll();
 
     boolean tieneSaldo(Cuenta cuenta);

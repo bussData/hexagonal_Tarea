@@ -17,6 +17,7 @@ public class CuentaResponse {
 
     private String  cuentaId;
     private String numCuenta;
+    private ClienteResponse cliente;
     private BigDecimal saldo;
     private String estado;
     private Date fechaCreacion;

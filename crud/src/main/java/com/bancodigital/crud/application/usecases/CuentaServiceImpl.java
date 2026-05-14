@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -82,7 +83,7 @@ public class CuentaServiceImpl implements CuentaService {
         }
 
         if(!cuentaRepositoryPort.esCuentaUnica(newCuenta)){
-            throw new RuntimeException("Nro de cuenta ya existia");
+            throw new RuntimeException("Id de cuenta ya existia");
         }
 
         if(newCuenta.getEstado().equals("ACTIVA") || newCuenta.getEstado().equals("CERRADO")){
@@ -106,6 +107,20 @@ public class CuentaServiceImpl implements CuentaService {
     @Override
     public List<Cuenta> findCuentaByNroCuenta(String nroCuenta) {
         return cuentaRepositoryPort.findByNroCuenta(nroCuenta);
+    }
+
+    @Override
+    public List<Cuenta> findCuentaByNombreCliente(String nombre) {
+        List<Cliente> lstClientes = clienteRepositoryPort.findByNameContaining(nombre.trim());
+        List<Cuenta> lstCuentas = new ArrayList<Cuenta>();
+        if(lstClientes == null){
+            return  null;
+        }else{
+            for(Cliente clienteEncontrado : lstClientes){
+                lstCuentas.addAll(cuentaRepositoryPort.findByClienteId(clienteEncontrado.getClienteId()));
+            }
+        }
+        return lstCuentas;
     }
 
     @Override
