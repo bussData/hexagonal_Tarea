@@ -42,6 +42,7 @@ public class CuentaServiceImpl implements CuentaService {
         if(clienteExistente == null){
             //grabamos el cliente es nuevo:
             Cliente newCliente = newCuenta.getCliente();
+            validarClienteNuevo(newCliente);
             Cliente clienteGuardado = clienteRepositoryPort.save(newCliente);
             log.info("grabo el nuevo cliente "+clienteGuardado.getDocumento()+", ahora grabara la cuenta");
             cuenta.setCliente(clienteGuardado);
@@ -54,6 +55,20 @@ public class CuentaServiceImpl implements CuentaService {
         log.info("se grabara la cuenta");
         return cuentaRepositoryPort.save(cuenta);
 
+    }
+
+    private void validarClienteNuevo(Cliente newCliente) {
+
+        if(!newCliente.hasValidEmail()){
+               throw new RuntimeException("Cliente no tiene correo valido");
+        }
+        if(!newCliente.hasValidDocumento()){
+              throw  new RuntimeException("Cliente no tiene documento valido");
+        }else{
+             if(clienteRepositoryPort.existeByDocumento(newCliente.getDocumento())){
+                 throw new RuntimeException("Documento ya existe en bd");
+            }
+        }
     }
 
     //validaciones de negocio:
