@@ -60,7 +60,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"clienteId\":\"CLI1\",\r\n    \"nombre\":\"Maria Julia\",\r\n    \"email\":\"mjulia@gmail.com\", \r\n    \"documento\":\"44508804\"     \r\n}",
+          "raw": "{\r\n    \"cuentaId\":\"CUENTASOLES1\",\r\n    \"cliente\":{\r\n        \"clienteId\":\"CLI1\",\r\n        \"nombre\":\"Maria Julia\",\r\n        \"email\":\"mjulia@gmail.com\", \r\n        \"documento\":\"44508804\"     \r\n    },\r\n    \"numCuenta\": \"0012026130500\",\r\n    \"saldo\":100,\r\n    \"estado\": \"ACTIVA\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -68,14 +68,14 @@
           }
         },
         "url": {
-          "raw": "localhost:8080/api/clientes",
+          "raw": "localhost:8080/api/cuentas",
           "host": [
             "localhost"
           ],
           "port": "8080",
           "path": [
             "api",
-            "clientes"
+            "cuentas"
           ]
         }
       },
