@@ -1,0 +1,179 @@
+{
+  "info": {
+    "_postman_id": "172b4f7a-3971-43b6-a6fd-6e2a55c4b85a",
+    "name": "CRUD_Banco",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "1842278"
+  },
+  "item": [
+    {
+      "name": "localhost:8080/api/clientes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/clientes",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "clientes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST localhost:8080/api/clientes",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"clienteId\":\"CLI1\",\r\n    \"nombre\":\"Maria Julia\",\r\n    \"email\":\"mjulia@gmail.com\", \r\n    \"documento\":\"44508804\"     \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/clientes",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "clientes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST localhost:8080/api/cuentas",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"clienteId\":\"CLI1\",\r\n    \"nombre\":\"Maria Julia\",\r\n    \"email\":\"mjulia@gmail.com\", \r\n    \"documento\":\"44508804\"     \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/clientes",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "clientes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT localhost:8080/api/clientes/CLI6",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"clienteId\":\"CLI6\",\r\n    \"nombre\":\"ANA LUISA\",\r\n    \"email\":\"jcasd@gmail.com\", \r\n    \"documento\":\"4458808\"     \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/clientes/CLI6",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "clientes",
+            "CLI6"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE localhost:8080/api/clientes/CLI6",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/clientes/CLI6",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "clientes",
+            "CLI6"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": " localhost:8080/api/clientes/search Busqueda por Nombre",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/clientes/search?nombre=Jua",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "clientes",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "nombre",
+              "value": "Jua"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/api/cuentas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/cuentas",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "cuentas"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
