@@ -6,6 +6,7 @@ import com.bancodigital.crud.domain.model.Cuenta;
 import com.bancodigital.crud.infraestructure.adapters.output.CuentaRequest;
 import com.bancodigital.crud.infraestructure.adapters.output.CuentaMapper;
 import com.bancodigital.crud.infraestructure.adapters.output.CuentaResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class CuentaController {
     private final CuentaMapper cuentaMapper;
 
     @PostMapping
-    public ResponseEntity<CuentaResponse> createCuenta(@RequestBody CuentaRequest request){
+    public ResponseEntity<CuentaResponse> createCuenta(@Valid @RequestBody CuentaRequest request){
         try{
 
             Cuenta newCuenta = this.cuentaMapper.toDomain(request);

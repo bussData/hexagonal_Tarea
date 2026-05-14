@@ -5,6 +5,7 @@ import com.bancodigital.crud.domain.model.Cliente;
 import com.bancodigital.crud.infraestructure.adapters.output.ClienteMapper;
 import com.bancodigital.crud.infraestructure.adapters.output.ClienteRequest;
 import com.bancodigital.crud.infraestructure.adapters.output.ClienteResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class ClienteController {
     private final ClienteMapper clienteMapper;
 
     @PostMapping
-    public ResponseEntity<ClienteResponse> createCliente(@RequestBody ClienteRequest request){
+    public ResponseEntity<ClienteResponse> createCliente(@Valid @RequestBody ClienteRequest request){
         try{
 
             Cliente newCliente = this.clienteMapper.toDomain(request);
@@ -108,7 +109,7 @@ public class ClienteController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteResponse> updateCliente(@PathVariable String id, @RequestBody ClienteRequest request) {
+    public ResponseEntity<ClienteResponse> updateCliente(@PathVariable String id, @Valid @RequestBody ClienteRequest request) {
         try {
             log.info("Actualizando cliente with ID: {} with data: nombre={}, email={}", id, request.getNombre(), request.getEmail());
 

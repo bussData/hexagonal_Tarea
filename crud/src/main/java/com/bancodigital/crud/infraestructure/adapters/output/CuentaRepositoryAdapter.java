@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
+import java.util.Optional; 
+import java.util.UUID; 
 
 //IMPLEMENTACION DE ADAPTER QUE SE LEE EN EL CRUD CONFIG
 @Repository
@@ -25,6 +26,12 @@ public class CuentaRepositoryAdapter implements CuentaRepositoryPort {
     public Cuenta save(Cuenta cuenta) {
         log.info("INICIO SAVE");
         CuentaEntity entity = this.mapper.toEntity(cuenta);
+
+        // Generar UUID si la cuenta no trae ID (nuevo registro)
+        if (entity.getCuentaId() == null || entity.getCuentaId().trim().isEmpty()) {
+            entity.setCuentaId(UUID.randomUUID().toString());
+        }
+
         log.info("ENTITY: {}", entity);
 
         CuentaEntity entidadAGrabar = this.jpaRepository.save(entity);
@@ -70,7 +77,8 @@ public class CuentaRepositoryAdapter implements CuentaRepositoryPort {
 
     @Override
     public boolean esCuentaUnica(Cuenta cuenta) {
-        //Cotejar si es bd es la unica cta
+        //Cotejar si es bd es la unica cta 
+
         if (this.jpaRepository.esCuentaUnica(cuenta.getCuentaId())) {
             return true;
         }
