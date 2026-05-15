@@ -39,7 +39,7 @@ public class TransaccionServiceImpl implements TransaccionService {
         }
 
         //validaciones de negocio de las ctas:
-        validacionesCtasTrx(cuentaOrigen, cuentaDestino);
+        validacionesCtasTrx(cuentaOrigen, cuentaDestino, newTrx);
 
         //Actualizar saldos:
         Transaccion trxProcesada = actualizarSaldos(newTrx);
@@ -56,7 +56,7 @@ public class TransaccionServiceImpl implements TransaccionService {
         return transaccionRepositoryPort.updateTrx(trxProcesada,"NOTIFICADA");
     }
 
-    private void validacionesCtasTrx(Cuenta cuentaOrigen, Cuenta cuentaDestino) {
+    private void validacionesCtasTrx(Cuenta cuentaOrigen, Cuenta cuentaDestino, Transaccion newTrx) {
         // Validar que ambas cuentas estén en estado ACTIVO
         if (!"ACTIVO".equals(cuentaOrigen.getEstado())) {
             throw new RuntimeException("La cuenta origen no está activa. Estado actual: " + cuentaOrigen.getEstado());
@@ -66,7 +66,8 @@ public class TransaccionServiceImpl implements TransaccionService {
         }
 
         // Validar que la cuenta origen tenga saldo suficiente (saldo > 0 y >= monto + comision)
-        if (cuentaOrigen.getSaldo() == null || cuentaOrigen.getSaldo().compareTo(BigDecimal.ZERO) <= 0) {
+        if (cuentaOrigen.getSaldo() == null || cuentaOrigen.getSaldo().compareTo(BigDecimal.ZERO) <= 0
+            || cuentaOrigen.getSaldo().compareTo(newTrx.getMontoTrx().add(newTrx.getComision()))<0) {
             throw new RuntimeException("La cuenta origen no tiene saldo disponible");
         }
     }
