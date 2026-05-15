@@ -60,7 +60,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"cuentaId\":\"CUENTADOL\",\r\n    \"cliente\":{\r\n        \"clienteId\":\"CLI2\",\r\n        \"nombre\":\"LIOS PAREDES\",\r\n        \"email\":\"PAREDESA@gmail.com\", \r\n        \"documento\":\"4343308804\"     \r\n    },\r\n    \"numCuenta\": \"0012233553776533\",\r\n    \"saldo\":100,\r\n    \"estado\": \"ACTIVA\"\r\n}",
+          "raw": "{\r\n    \"cuentaId\":\"CUENTADOL\",\r\n    \"cliente\":{\r\n        \"clienteId\":\"CLI2\",\r\n        \"nombre\":\"LIOS PAREDES\",\r\n        \"email\":\"PAREDESA@gmail.com\", \r\n        \"documento\":\"4343308804\"     \r\n    },\r\n    \"numCuenta\": \"0012233553776533\",\r\n    \"saldo\":100,\r\n    \"estado\": \"ACTIVO\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
