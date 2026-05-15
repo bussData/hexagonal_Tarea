@@ -57,11 +57,18 @@ public class TransaccionServiceImpl implements TransaccionService {
     }
 
     private void validacionesCtasTrx(Cuenta cuentaOrigen, Cuenta cuentaDestino) {
-        //validar que ambas cuentas esten estado ACTIVA
+        // Validar que ambas cuentas estén en estado ACTIVO
+        if (!"ACTIVO".equals(cuentaOrigen.getEstado())) {
+            throw new RuntimeException("La cuenta origen no está activa. Estado actual: " + cuentaOrigen.getEstado());
+        }
+        if (!"ACTIVO".equals(cuentaDestino.getEstado())) {
+            throw new RuntimeException("La cuenta destino no está activa. Estado actual: " + cuentaDestino.getEstado());
+        }
 
-        //Validar saldos de ctas origen y destino
-        //cuentaOrigen.getSaldo > 0 (usar compareTo de bigDecimal)
-
+        // Validar que la cuenta origen tenga saldo suficiente (saldo > 0 y >= monto + comision)
+        if (cuentaOrigen.getSaldo() == null || cuentaOrigen.getSaldo().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("La cuenta origen no tiene saldo disponible");
+        }
     }
 
     private Transaccion actualizarSaldos(Transaccion newTrx){
@@ -76,19 +83,39 @@ public class TransaccionServiceImpl implements TransaccionService {
 
     private void validacionesRegistroTrx(Transaccion newTrx) {
 
-        //validar que trxId no exista
+        // Validar que trxId no exista ya en BD
         Transaccion lstTrx = transaccionRepositoryPort.findById(newTrx.getTrxId());
-
-        if(lstTrx !=null){
+        if (lstTrx != null) {
             throw new RuntimeException("Trx id ya existe");
         }
 
-        //validar existencia de ctas y estado activas
-        if(newTrx.getCuentaOrigen().getCuentaId() == null || newTrx.getCuentaDestino().getCuentaId() ==null){
-            throw new RuntimeException("Cuenta de origen o destino debe ser valida");
+        // Validar existencia de IDs de cuentas origen y destino
+        if (newTrx.getCuentaOrigen() == null || newTrx.getCuentaOrigen().getCuentaId() == null) {
+            throw new RuntimeException("La cuenta origen es obligatoria");
         }
-        //validar que el tipo de trx sea diferente a null
+        if (newTrx.getCuentaDestino() == null || newTrx.getCuentaDestino().getCuentaId() == null) {
+            throw new RuntimeException("La cuenta destino es obligatoria");
+        }
 
+        // Validar que origen ≠ destino (database.md: cuenta_origen_id != cuenta_destino_id)
+        if (!newTrx.cuentasDistintas()) {
+            throw new RuntimeException("La cuenta origen y destino no pueden ser la misma");
+        }
+
+        // Validar monto > 0 (database.md: monto > 0)
+        if (!newTrx.hasValidMonto()) {
+            throw new RuntimeException("El monto debe ser mayor a 0. Monto recibido: " + newTrx.getMontoTrx());
+        }
+
+        // Validar tipo de trx (database.md: 'TRANSFERENCIA', 'DEPOSITO', 'RETIRO')
+        if (!newTrx.hasValidTipo()) {
+            throw new RuntimeException("El tipo de transacción '" + newTrx.getTipoTrx() + "' no es válido. Use: TRANSFERENCIA, DEPOSITO o RETIRO");
+        }
+
+        // Validar estado de trx (database.md: 'PENDIENTE', 'COMPLETADA', 'FALLIDA', 'CANCELADA')
+        if (!newTrx.hasValidEstado()) {
+            throw new RuntimeException("El estado de transacción '" + newTrx.getEstadoTrx() + "' no es válido. Use: PENDIENTE, COMPLETADA, FALLIDA o CANCELADA");
+        }
     }
 
     @Override
